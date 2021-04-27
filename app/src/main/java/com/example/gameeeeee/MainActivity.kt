@@ -4,11 +4,8 @@ import android.media.AudioManager
 import android.media.SoundPool
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.widget.FrameLayout
 import android.widget.ImageView
-import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.coroutines.*
-import java.lang.Math.random
 import kotlin.random.Random
 import kotlin.random.nextInt
 
@@ -23,43 +20,40 @@ class MainActivity : AppCompatActivity() {
     private var soundId6: Int = 0
     var play_sound_buffer = 0
 
-
-/*lateinit var Courutine_Dice : CoroutineScope*/
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
         //Найти элемент верстки (Картинка) по id. поставить на него слушатель кликов
         findViewById<ImageView>(R.id.dice).setOnClickListener {
-            /*  if(Courutine_Dice.isActive)*/
-            /* Courutine_Dice =*/ MainScope().launch {
+           MainScope().launch {
 
-            var SoundBuffer = Random.nextInt(1..6)
-            var rotateDirection = arrayListOf(-1, 1).random()//
+            var RandomNumber = Random.nextInt(1..6)
+            var rotateDirection = arrayListOf(-1, 1).random()
             var random_Buffer_XY = Random.nextBoolean()
-            var rotation_Time: Long = 1
-            var NumberOfRotations_begin = Random.nextInt(1..2)
-            var NumberOfRotations_end = Random.nextInt(5..7)
-            var Dice_scale:Float = 0.005F
-//            begin.text = NumberOfRotations_begin.toString()
-//            end.text = NumberOfRotations_end.toString()
+            var rotation_Time: Long = 2
+            var Dice_scale:Float = 0.01F
 
 
 
-            for (i in NumberOfRotations_begin..NumberOfRotations_end) {
+            for (i in 1..4) {
+
+                RandomNumber = Random.nextInt(1..6)
+                rotateDirection = arrayListOf(-1, 1).random()
+                random_Buffer_XY = Random.nextBoolean()
+
 
                 if (random_Buffer_XY) {
-                    for (i in 0..89) {
-                        it.rotationX = it.rotationX + rotateDirection
+                    for (i in 0..29) {
+                        it.rotationX = it.rotationX + rotateDirection*3
                         it.scaleX = it.scaleX + Dice_scale
                         it.scaleY = it.scaleY + Dice_scale
                         delay(rotation_Time)
 
                     }
                 } else {
-                    for (i in 0..89) {
-                        it.rotationY = it.rotationY + rotateDirection
+                    for (i in 0..29) {
+                        it.rotationY = it.rotationY + rotateDirection*3
                         it.scaleX = it.scaleX + Dice_scale
                         it.scaleY = it.scaleY + Dice_scale
                         delay(rotation_Time)
@@ -68,7 +62,7 @@ class MainActivity : AppCompatActivity() {
 
 
                 findViewById<ImageView>(R.id.dice).setImageResource(
-                    when (SoundBuffer) {
+                    when (RandomNumber) {
                         1 -> R.drawable.one
                         2 -> R.drawable.two
                         3 -> R.drawable.three
@@ -80,16 +74,16 @@ class MainActivity : AppCompatActivity() {
                 )
 
                 if (random_Buffer_XY) {
-                    for (i in 90..179) {
-                        it.rotationX = it.rotationX + rotateDirection
+                    for (i in 30..59) {
+                        it.rotationX = it.rotationX + rotateDirection*3
                         it.scaleX = it.scaleX - Dice_scale
                         it.scaleY = it.scaleY - Dice_scale
                         delay(rotation_Time)
                     }
 
                 } else {
-                    for (i in 90..179) {
-                        it.rotationY = it.rotationY + rotateDirection
+                    for (i in 30..59) {
+                        it.rotationY = it.rotationY + rotateDirection*3
                         it.scaleX = it.scaleX - Dice_scale
                         it.scaleY = it.scaleY - Dice_scale
                         delay(rotation_Time)
@@ -97,10 +91,8 @@ class MainActivity : AppCompatActivity() {
 
                 }
             }
-            play_sound_buffer = SoundBuffer
-            playSound(SoundBuffer)
-
-
+            play_sound_buffer = RandomNumber
+            playSound(play_sound_buffer)
         }
         }
 
@@ -119,7 +111,7 @@ class MainActivity : AppCompatActivity() {
 
     fun playSound(sound: Int) {
         var soundId = 0
-        when (play_sound_buffer) {
+        when (sound) {
             1 -> soundId = soundId1
             2 -> soundId = soundId2
             3 -> soundId = soundId3
