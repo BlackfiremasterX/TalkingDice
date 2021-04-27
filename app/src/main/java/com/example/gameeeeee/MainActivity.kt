@@ -18,7 +18,6 @@ class MainActivity : AppCompatActivity() {
     private var soundId4: Int = 0
     private var soundId5: Int = 0
     private var soundId6: Int = 0
-    var play_sound_buffer = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -91,11 +90,10 @@ class MainActivity : AppCompatActivity() {
 
                 }
             }
-            play_sound_buffer = RandomNumber
-            playSound(play_sound_buffer)
-        }
-        }
 
+            playSound(RandomNumber)
+        }
+        }
 
         soundPool = SoundPool(1, AudioManager.STREAM_MUSIC, 0)
         soundId1 = soundPool!!.load(baseContext, R.raw.one, 1)
